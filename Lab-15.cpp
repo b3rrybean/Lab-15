@@ -13,21 +13,21 @@ private:
 
 public:
     // Constructors
-    Movie::Movie() : title (""), yearReleased(0), screenWriter("") {}
-    Movie::Movie(string t, int y, string s) : title(t), yearReleased(y), screenWriter(s) {}
+    Movie() : title (""), yearReleased(0), screenWriter("") {}
+    Movie(string t, int y, string s) : title(t), yearReleased(y), screenWriter(s) {}
 
     // Setters
-    void Movie::setTitle(string t)              { title = t; }
-    void Movie::setYearReleased(int y)          { yearReleased = y; }
-    void Movie::setScreenWriter(string s)       { screenWriter = s; }
+    void setTitle(string t)              { title = t; }
+    void setYearReleased(int y)          { yearReleased = y; }
+    void setScreenWriter(string s)       { screenWriter = s; }
 
     // Getters
-    string Movie::getTitle() const              { return title; }
-    int Movie::getYearReleased() const          { return yearReleased; }
-    string Movie::getScreenWriter() const       { return screenWriter; }
+    string getTitle() const              { return title; }
+    int getYearReleased() const          { return yearReleased; }
+    string getScreenWriter() const       { return screenWriter; }
 
     // Print method
-    void Movie::print() const {
+    void print() const {
         cout << "Movie: " << title << endl;
         cout << "   Year released: " << yearReleased << endl;
         cout << "   Screenwriter: " << screenWriter << endl;
@@ -46,11 +46,21 @@ int main() {
     string title, screenWriter;
     int year;
 
-    while (file >> ws && getline(file, title)) {
+    while (getline(file, title)) {
         file >> year;
+        file.ignore(); // skip newline after year
         getline(file, screenWriter);
 
-        
+        Movie temp(title, year, screenWriter);
+        movies.push_back(temp);
+    }
+
+    file.close();
+
+    // Print all movies
+    for (int i = 0; i < movies.size(); i++) {
+        movies[i].print();
+        cout << endl;
     }
 
     return 0;
